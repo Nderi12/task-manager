@@ -19,11 +19,9 @@ class TaskController extends Controller
     {
         $tasks = Task::with('project')->get();
 
-        if ($tasks->isEmpty()) {
-            return response()->json(['message' => 'No tasks found.'], 404);
-        }
-
-        return response()->json($tasks);
+        return view('task.list', [
+            'tasks' => $tasks
+        ]);
     }
 
     /**
@@ -33,7 +31,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        
+        $projects = Project::all();
+
+        return view('task.create', [
+            'projects' => $projects
+        ]);        
     }
 
     /**
@@ -78,7 +80,12 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $projects = Project::all();
+
+        return view('task.edit', [
+            'task' => $task,
+            'projects' => $projects
+        ]);
     }
 
     /**
