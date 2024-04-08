@@ -7,13 +7,13 @@
                 <div class="card-header">Projects</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('success') }}
                         </div>
                     @endif
 
-                    <a href="{{ route('projects.create') }}" class="btn btn-primary mb-3">Create Project</a>
+                    <a href="{{ route('projects.create') }}" class="btn btn-sm btn-primary mb-3">Create Project</a>
 
                     @if ($projects->isEmpty())
                         <div class="text-center">
@@ -36,11 +36,11 @@
                                         <td>{{ $project->name }}</td>
                                         <td>{{ $project->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('projects.edit', $project) }}" class="btn btn-primary">Edit</a>
+                                            <a href="{{ route('projects.edit', $project) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="{{ route('projects.destroy', $project) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

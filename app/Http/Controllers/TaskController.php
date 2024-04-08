@@ -63,7 +63,7 @@ class TaskController extends Controller
         if (Arr::get($response, 'success')) {
             return redirect()->route('tasks.index')->with('success', $response['message']);
         } else {
-            return back()->with('error', implode('<br>', $response['errors']))->withInput($request->all());
+            return redirect()->back()->withErrors(implode('<br>', $response['errors']))->withInput();
         }
     }
 
@@ -165,6 +165,6 @@ class TaskController extends Controller
         $task->update(['priority' => $newPriority]);
 
         // refresh the page
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->with('success', 'Task priority updated successfully.');
     }
 }
