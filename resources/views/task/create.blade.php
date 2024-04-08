@@ -14,9 +14,9 @@
             <div class="mb-3">
                 <label for="priority" class="form-label">Priority</label>
                 <select class="form-select" id="priority" name="priority" required>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
                 </select>
             </div>
             <div class="mb-3">

@@ -16,8 +16,8 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        Project::factory(4)->create()->each(function ($project) {
-            Task::factory(6)->create(['project_id' => $project->id]);
+        Project::factory(2)->create()->each(function ($project) {
+            Task::factory(3)->create(['project_id' => $project->id]);
         });
     }
 }

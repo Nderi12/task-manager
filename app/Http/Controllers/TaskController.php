@@ -15,12 +15,24 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::with('project')->get();
+        $projectId = $request->query('project');
+
+        $tasks = Task::query();
+        
+        if ($projectId) {
+            $tasks->where('project_id', $projectId);
+        }
+        
+        // Order tasks by lowest to highest priority
+        $tasks = $tasks->orderBy('priority', 'asc')->get();
+
+        $projects = Project::all();
 
         return view('task.list', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'projects' => $projects
         ]);
     }
 
@@ -121,5 +133,38 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+    }
+
+    /**
+     * Reorder tasks based on new priorities.
+     * (Logic for reordering. If movement is a positive number, priority is increased. It is increased by the number of movements (1,2,3,4 and so on). Maximumm priority is 3
+     * If movement is a negative number, priority is decreased. It is decreased by the number of movements (1,2,3,4 and so on). Minimum priority is 1
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reorder(Request $request)
+    {
+        $taskId = $request->input('taskId');
+        $movement = $request->input('movement');
+
+        // Find the task
+        $task = Task::findOrFail($taskId);
+
+        // Determine the new priority based on movement direction
+        $newPriority = $task->priority + $movement;
+
+        // Ensure priority stays within the range of 1 to 3
+        if ($newPriority < 1) {
+            $newPriority = 1; // Minimum priority is 1
+        } elseif ($newPriority > 3) {
+            $newPriority = 3; // Maximum priority is 3
+        }
+
+        // Update the priority of the task
+        $task->update(['priority' => $newPriority]);
+
+        // refresh the page
+        return redirect()->route('tasks.index');
     }
 }

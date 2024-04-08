@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('project.list');
+    return app(ProjectController::class)->index();
 });
 
 Route::resource('projects', ProjectController::class);
 Route::resource('tasks', TaskController::class);
+
+Route::post('tasks/reorder', [TaskController::class, 'reorder'])->name('tasks.reorder');

@@ -16,9 +16,9 @@
             <div class="mb-3">
                 <label for="priority" class="form-label">Priority</label>
                 <select class="form-select" id="priority" name="priority" required>
-                    <option value="low" @if ($task->priority === 'low') selected @endif>Low</option>
-                    <option value="medium" @if ($task->priority === 'medium') selected @endif>Medium</option>
-                    <option value="high" @if ($task->priority === 'high') selected @endif>High</option>
+                    <option value="1" @if ($task->priority === '1') selected @endif>Low</option>
+                    <option value="2" @if ($task->priority === '2') selected @endif>Medium</option>
+                    <option value="3" @if ($task->priority === '3') selected @endif>High</option>
                 </select>
             </div>
             <div class="mb-3">
